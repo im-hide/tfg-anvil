@@ -325,41 +325,6 @@ h3 {
   padding: 1rem;
 }
 
-.reference-section {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  margin-top: 2rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.operations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
-}
-
-.operation-ref {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.operation-ref .op-name {
-  margin-bottom: 0.5rem;
-}
-
-.operation-ref .op-value {
-  font-size: 1.25rem;
-  background: rgba(255, 255, 255, 0.3);
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-}
-
 @media (max-width: 768px) {
   .container {
     padding: 1rem;

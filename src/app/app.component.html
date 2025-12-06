@@ -139,19 +139,4 @@
       </div>
     </div>
   </div>
-
-  <div class="reference-section">
-    <h2>Operation Reference</h2>
-    <div class="operations-grid">
-      <div 
-        *ngFor="let op of availableOperations" 
-        class="operation-ref"
-        [style.background-color]="op.color"
-        [style.color]="getTextColor(op.color)"
-      >
-        <span class="op-name">{{ op.name }}</span>
-        <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
-      </div>
-    </div>
-  </div>
 </div>
