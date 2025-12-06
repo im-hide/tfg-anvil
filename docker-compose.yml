@@ -9,7 +9,7 @@ services:
     container_name: tfc-forging-calculator
     restart: unless-stopped
     ports:
-      - "localhost:4300:80"
+      - "192.168.0.22:4300:80"
     environment:
       - TZ=America/New_York
     labels:
