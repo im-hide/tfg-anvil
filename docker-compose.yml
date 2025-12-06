@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  tfc-forging-calculator:
+    image: tfc-forging-calculator:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tfc-forging-calculator
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - TZ=America/New_York
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+      - "description=TerraFirmaCraft Forging Calculator"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    networks:
+      - tfc-network
+
+networks:
+  tfc-network:
+    driver: bridge
+
+# Optional: Add a volume for nginx logs if you want persistent logging
+# volumes:
+#   nginx-logs:
+#     driver: local
