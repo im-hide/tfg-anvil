@@ -1,0 +1,148 @@
+<div class="container">
+  <h1>TerraFirmaCraft Forging Calculator</h1>
+  <p class="subtitle">Calculate the perfect forging sequence to hit your target value</p>
+
+  <div class="input-section">
+    <h2>Step 1: Enter Target Value</h2>
+    <div class="input-group">
+      <label for="targetValue">Target Value (from in-game UI):</label>
+      <input 
+        type="number" 
+        id="targetValue" 
+        [(ngModel)]="targetValue" 
+        placeholder="e.g., 45"
+        class="number-input"
+      >
+    </div>
+
+    <h2>Step 2: Enter Final Operations (Left to Right)</h2>
+    <p class="hint">Enter the operations shown at the top of the in-game UI, from left to right. Only fill from left to right.</p>
+    
+    <div class="final-ops-container">
+      <div class="input-group">
+        <label for="finalOp1">Final Operation 1:</label>
+        <select id="finalOp1" [(ngModel)]="finalOp1" class="op-select">
+          <option value="">-- Select --</option>
+          <option *ngFor="let op of availableOperations" [value]="op.name">
+            {{ op.name }} ({{ op.value > 0 ? '+' : '' }}{{ op.value }})
+          </option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="finalOp2">Final Operation 2:</label>
+        <select id="finalOp2" [(ngModel)]="finalOp2" class="op-select" [disabled]="!finalOp1">
+          <option value="">-- Select --</option>
+          <option *ngFor="let op of availableOperations" [value]="op.name">
+            {{ op.name }} ({{ op.value > 0 ? '+' : '' }}{{ op.value }})
+          </option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="finalOp3">Final Operation 3:</label>
+        <select id="finalOp3" [(ngModel)]="finalOp3" class="op-select" [disabled]="!finalOp2">
+          <option value="">-- Select --</option>
+          <option *ngFor="let op of availableOperations" [value]="op.name">
+            {{ op.name }} ({{ op.value > 0 ? '+' : '' }}{{ op.value }})
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button (click)="calculate()" class="btn btn-primary">Calculate Sequence</button>
+      <button (click)="reset()" class="btn btn-secondary">Reset</button>
+    </div>
+  </div>
+
+  <div class="result-section" *ngIf="result">
+    <h2>Results</h2>
+    
+    <div class="result-card">
+      <h3>Calculation Summary</h3>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span class="label">Original Target:</span>
+          <span class="value">{{ result.originalTarget }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">Inversed Sum:</span>
+          <span class="value">{{ result.inversedSum > 0 ? '+' : '' }}{{ result.inversedSum }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="label">New Target:</span>
+          <span class="value highlight">{{ result.newTarget }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <h3>Required Operations ({{ result.requiredOperations.length }})</h3>
+      <p class="hint">Perform these operations first to reach the new target:</p>
+      <div class="operations-list">
+        <div 
+          *ngFor="let op of requiredOperationsReversed; let i = index" 
+          class="operation-chip"
+          [style.background-color]="op.color"
+          [style.color]="getTextColor(op.color)"
+        >
+          <span class="op-number">{{ i + 1 }}</span>
+          <span class="op-name">{{ op.name }}</span>
+          <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
+        </div>
+        <div *ngIf="result.requiredOperations.length === 0" class="empty-message">
+          No additional operations needed!
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <h3>Final Operations ({{ result.finalOperations.length }})</h3>
+      <p class="hint">Then perform your final operations (applied right-to-left in-game):</p>
+      <div class="operations-list">
+        <div 
+          *ngFor="let op of finalOperationsReversed; let i = index" 
+          class="operation-chip"
+          [style.background-color]="op.color"
+          [style.color]="getTextColor(op.color)"
+        >
+          <span class="op-number">{{ i + 1 }}</span>
+          <span class="op-name">{{ op.name }}</span>
+          <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-card complete-sequence">
+      <h3>Complete Sequence ({{ result.totalOperations.length }} operations)</h3>
+      <div class="operations-list">
+        <div 
+          *ngFor="let op of totalOperationsReversed; let i = index" 
+          class="operation-chip"
+          [style.background-color]="op.color"
+          [style.color]="getTextColor(op.color)"
+        >
+          <span class="op-number">{{ i + 1 }}</span>
+          <span class="op-name">{{ op.name }}</span>
+          <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reference-section">
+    <h2>Operation Reference</h2>
+    <div class="operations-grid">
+      <div 
+        *ngFor="let op of availableOperations" 
+        class="operation-ref"
+        [style.background-color]="op.color"
+        [style.color]="getTextColor(op.color)"
+      >
+        <span class="op-name">{{ op.name }}</span>
+        <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
+      </div>
+    </div>
+  </div>
+</div>
