@@ -18,6 +18,22 @@
     <h2>Step 2: Select Final Operations (Click in Order)</h2>
     <p class="hint">Click the operations shown at the top of the in-game UI, from left to right. Maximum 3 operations.</p>
     
+    <!-- Operation Selection Grid -->
+    <div class="operations-selection-grid">
+      <button
+        *ngFor="let op of availableOperations"
+        class="operation-button"
+        [style.background-color]="op.color"
+        [style.color]="getTextColor(op.color)"
+        [disabled]="finalOperations.length >= 3"
+        (click)="addFinalOperation(op)"
+        [title]="finalOperations.length >= 3 ? 'Maximum 3 operations selected' : 'Click to add'"
+      >
+        <span class="op-name">{{ op.name }}</span>
+        <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
+      </button>
+    </div>
+
     <!-- Selected Final Operations Display -->
     <div class="selected-ops-display" *ngIf="finalOperations.length > 0">
       <h3>Selected Operations ({{ finalOperations.length }}/3):</h3>
@@ -38,22 +54,6 @@
       </div>
       <button (click)="clearFinalOperations()" class="btn btn-small btn-secondary" style="margin-top: 0.5rem;">
         Clear All
-      </button>
-    </div>
-
-    <!-- Operation Selection Grid -->
-    <div class="operations-selection-grid">
-      <button
-        *ngFor="let op of availableOperations"
-        class="operation-button"
-        [style.background-color]="op.color"
-        [style.color]="getTextColor(op.color)"
-        [disabled]="finalOperations.length >= 3"
-        (click)="addFinalOperation(op)"
-        [title]="finalOperations.length >= 3 ? 'Maximum 3 operations selected' : 'Click to add'"
-      >
-        <span class="op-name">{{ op.name }}</span>
-        <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
       </button>
     </div>
 
