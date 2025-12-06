@@ -9,9 +9,7 @@ import { ForgingService, Operation, CalculationResult } from './forging.service'
 })
 export class AppComponent {
   targetValue: number = 0;
-  finalOp1: string = '';
-  finalOp2: string = '';
-  finalOp3: string = '';
+  finalOperations: Operation[] = [];
   
   result: CalculationResult | null = null;
   
@@ -37,34 +35,28 @@ export class AppComponent {
 
   constructor(private forgingService: ForgingService) {}
 
+  addFinalOperation(operation: Operation): void {
+    if (this.finalOperations.length < 3) {
+      this.finalOperations.push(operation);
+    }
+  }
+
+  removeFinalOperation(index: number): void {
+    this.finalOperations.splice(index, 1);
+  }
+
+  clearFinalOperations(): void {
+    this.finalOperations = [];
+  }
+
   calculate(): void {
-    // Collect final operations from left to right (as user inputs them)
-    const finalOps: Operation[] = [];
-    
-    if (this.finalOp1) {
-      const op = this.forgingService.getOperationByName(this.finalOp1);
-      if (op) finalOps.push(op);
-    }
-    
-    if (this.finalOp2 && this.finalOp1) {
-      const op = this.forgingService.getOperationByName(this.finalOp2);
-      if (op) finalOps.push(op);
-    }
-    
-    if (this.finalOp3 && this.finalOp2 && this.finalOp1) {
-      const op = this.forgingService.getOperationByName(this.finalOp3);
-      if (op) finalOps.push(op);
-    }
-    
-    // Calculate the forging sequence
-    this.result = this.forgingService.calculate(this.targetValue, finalOps);
+    // Use the finalOperations array directly
+    this.result = this.forgingService.calculate(this.targetValue, this.finalOperations);
   }
 
   reset(): void {
     this.targetValue = 0;
-    this.finalOp1 = '';
-    this.finalOp2 = '';
-    this.finalOp3 = '';
+    this.finalOperations = [];
     this.result = null;
   }
 

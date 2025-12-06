@@ -15,43 +15,52 @@
       >
     </div>
 
-    <h2>Step 2: Enter Final Operations (Left to Right)</h2>
-    <p class="hint">Enter the operations shown at the top of the in-game UI, from left to right. Only fill from left to right.</p>
+    <h2>Step 2: Select Final Operations (Click in Order)</h2>
+    <p class="hint">Click the operations shown at the top of the in-game UI, from left to right. Maximum 3 operations.</p>
     
-    <div class="final-ops-container">
-      <div class="input-group">
-        <label for="finalOp1">Final Operation 1:</label>
-        <select id="finalOp1" [(ngModel)]="finalOp1" class="op-select">
-          <option value="">-- Select --</option>
-          <option *ngFor="let op of availableOperations" [value]="op.name">
-            {{ op.name }} ({{ op.value > 0 ? '+' : '' }}{{ op.value }})
-          </option>
-        </select>
+    <!-- Selected Final Operations Display -->
+    <div class="selected-ops-display" *ngIf="finalOperations.length > 0">
+      <h3>Selected Operations ({{ finalOperations.length }}/3):</h3>
+      <div class="selected-ops-list">
+        <div 
+          *ngFor="let op of finalOperations; let i = index" 
+          class="selected-op-chip"
+          [style.background-color]="op.color"
+          [style.color]="getTextColor(op.color)"
+          (click)="removeFinalOperation(i)"
+          title="Click to remove"
+        >
+          <span class="op-number">{{ i + 1 }}</span>
+          <span class="op-name">{{ op.name }}</span>
+          <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
+          <span class="remove-x">×</span>
+        </div>
       </div>
+      <button (click)="clearFinalOperations()" class="btn btn-small btn-secondary" style="margin-top: 0.5rem;">
+        Clear All
+      </button>
+    </div>
 
-      <div class="input-group">
-        <label for="finalOp2">Final Operation 2:</label>
-        <select id="finalOp2" [(ngModel)]="finalOp2" class="op-select" [disabled]="!finalOp1">
-          <option value="">-- Select --</option>
-          <option *ngFor="let op of availableOperations" [value]="op.name">
-            {{ op.name }} ({{ op.value > 0 ? '+' : '' }}{{ op.value }})
-          </option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label for="finalOp3">Final Operation 3:</label>
-        <select id="finalOp3" [(ngModel)]="finalOp3" class="op-select" [disabled]="!finalOp2">
-          <option value="">-- Select --</option>
-          <option *ngFor="let op of availableOperations" [value]="op.name">
-            {{ op.name }} ({{ op.value > 0 ? '+' : '' }}{{ op.value }})
-          </option>
-        </select>
-      </div>
+    <!-- Operation Selection Grid -->
+    <div class="operations-selection-grid">
+      <button
+        *ngFor="let op of availableOperations"
+        class="operation-button"
+        [style.background-color]="op.color"
+        [style.color]="getTextColor(op.color)"
+        [disabled]="finalOperations.length >= 3"
+        (click)="addFinalOperation(op)"
+        [title]="finalOperations.length >= 3 ? 'Maximum 3 operations selected' : 'Click to add'"
+      >
+        <span class="op-name">{{ op.name }}</span>
+        <span class="op-value">{{ op.value > 0 ? '+' : '' }}{{ op.value }}</span>
+      </button>
     </div>
 
     <div class="button-group">
-      <button (click)="calculate()" class="btn btn-primary">Calculate Sequence</button>
+      <button (click)="calculate()" class="btn btn-primary" [disabled]="finalOperations.length === 0">
+        Calculate Sequence
+      </button>
       <button (click)="reset()" class="btn btn-secondary">Reset</button>
     </div>
   </div>
