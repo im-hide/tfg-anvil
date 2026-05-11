@@ -8,11 +8,10 @@ A web-based calculator for perfectly forging items in TerraFirmaCraft. This Angu
 
 ## Features
 
-- 🎯 **Smart Algorithm**: Uses BFS (Breadth-First Search) to find the minimum number of operations required
-- 🎨 **Color-Coded Operations**: Visual representation matching in-game colors
-- 📊 **Step-by-Step Breakdown**: Shows required operations, final operations, and complete sequence
-- ⚡ **Real-time Calculation**: Instant results as you input values
-- 📱 **Responsive Design**: Works on desktop and mobile devices
+-  **Smart Algorithm**: Uses BFS (Breadth-First Search) to find the minimum number of operations required
+-  **Color-Coded Operations**: Visual representation matching in-game colors
+-  **Step-by-Step Breakdown**: Shows required operations, final operations, and complete sequence
+-  **Real-time Calculation**: Instant results as you input values
 
 ## How It Works
 
