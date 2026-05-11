@@ -25,19 +25,6 @@ A web-based calculator for perfectly forging items in TerraFirmaCraft. This Angu
    - The minimum number of operations needed to reach that new target
 4. **Execute**: Follow the displayed sequence in order
 
-### Available Operations
-
-| Operation   | Color       | Value |
-|-------------|-------------|-------|
-| Cyan        | 🔵 Cyan     | -3    |
-| Light Blue  | 💙 Light Blue | -6  |
-| Lime        | 💚 Lime     | +2    |
-| Yellow      | 💛 Yellow   | +7    |
-| Blue        | 🔵 Blue     | -9    |
-| Purple      | 💜 Purple   | -15   |
-| Orange      | 🧡 Orange   | +13   |
-| Red         | ❤️ Red      | +16   |
-
 ## Installation & Development
 
 ### Prerequisites
